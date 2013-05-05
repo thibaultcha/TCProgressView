@@ -10,26 +10,51 @@
 
 @implementation TCProgressView
 
-@synthesize progressView = _progressView;
 @synthesize backgroundView = _backgroundView;
 @synthesize progress = _progress;
+
+
+#pragma mark - Init
+
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     
     if (self) {
-        _backgroundView = [[UIView alloc] initWithFrame:frame];
-        _progressView = [[UIView alloc] initWithFrame:frame];
+        _backgroundView = [[UIView alloc] initWithFrame:self.bounds];
         
-        self.backgroundView.backgroundColor = [UIColor redColor];
-        self.progressView.backgroundColor = [UIColor greenColor];
-        
-        [self addSubview:self.progressView];
         [self addSubview:self.backgroundView];
     }
     
     return self;
+}
+
+- (id)initWithFrame:(CGRect)frame
+    backgroundColor:(UIColor *)backgroundColor
+   andProgressColor:(UIColor *)progressColor
+{
+    self = [self initWithFrame:frame];
+    
+    if (self) {
+        [self setBackgroundViewColor:backgroundColor];
+        [self setProgressViewColor:progressColor];
+    }
+    
+    return self;
+}
+
+#pragma mark- Setters
+
+
+- (void)setBackgroundViewColor:(UIColor *)backgroundColor
+{
+    self.backgroundView.backgroundColor = backgroundColor;
+}
+
+- (void)setProgressViewColor:(UIColor *)progressViewColor
+{
+    self.backgroundColor = progressViewColor;
 }
 
 - (void)setProgress:(float)progress

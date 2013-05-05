@@ -10,11 +10,14 @@
 
 @interface TCProgressView : UIView
 
-@property (nonatomic, retain) UIView *progressView;
 @property (nonatomic, retain) UIView *backgroundView;
 @property (nonatomic, setter = setProgress:) float progress;
 
 - (id)initWithFrame:(CGRect)frame;
+
+- (id)initWithFrame:(CGRect)frame
+    backgroundColor:(UIColor *)backgroundColor
+   andProgressColor:(UIColor *)progressColor;
 
 - (void)setBackgroundViewColor:(UIColor *)backgroundColor;
 

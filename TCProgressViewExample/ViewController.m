@@ -18,24 +18,25 @@
 {
     [super viewDidLoad];
 	
-    // Progress View
-    _progressView = [[TCProgressView alloc] initWithFrame:CGRectMake(0,
-                                                                     0,
-                                                                     self.view.bounds.size.width,
-                                                                     10.0f)];
-    [self.view addSubview:self.progressView];
-    
     // Start Button
     UIButton *startProgress = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [startProgress setFrame:CGRectMake(0,
-                                       10.0f,
-                                       100.0f,
-                                       40.0f)];
+    [startProgress setFrame:CGRectMake(0, 0, 100.0f, 40.0f)];
+    [startProgress setCenter:CGPointMake(self.view.frame.size.width/2, 40.0f)];
     [startProgress setTitle:@"Start" forState:UIControlStateNormal];
     [startProgress addTarget:self
                       action:@selector(startProgress)
             forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:startProgress];
+    
+    // Progress View
+    _progressView = [[TCProgressView alloc] initWithFrame:CGRectMake(0,
+                                                                     startProgress.frame.origin.y + startProgress.frame.size.height + 10.0f,
+                                                                     self.view.bounds.size.width,
+                                                                     10.0f)
+                                          backgroundColor:[UIColor redColor]
+                                         andProgressColor:[UIColor greenColor]];
+    
+    [self.view addSubview:self.progressView];
     
     // View
     self.view.backgroundColor = [UIColor whiteColor];
@@ -44,7 +45,8 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    [self setProgressView:nil];
 }
 
 - (void)startProgress
