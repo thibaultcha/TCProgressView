@@ -44,6 +44,28 @@
     return self;
 }
 
+
+#pragma mark - Utilities
+
+
+- (void)setRounded:(BOOL)rounded withRadius:(CGFloat)radius
+{
+    if (rounded) {
+        self.layer.cornerRadius = radius;
+        self.layer.masksToBounds = YES;
+    } else {
+#warning To improve
+        self.layer.cornerRadius = 0.0f;
+        self.layer.masksToBounds = NO;
+    }
+}
+
+- (void)setProgressViewRounded:(BOOL)rounded withRadius:(CGFloat)radius
+{
+#warning To do
+}
+
+
 #pragma mark- Setters
 
 

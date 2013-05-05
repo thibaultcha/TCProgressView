@@ -21,7 +21,7 @@
     // Start Button
     UIButton *startProgress = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [startProgress setFrame:CGRectMake(0, 0, 100.0f, 40.0f)];
-    [startProgress setCenter:CGPointMake(self.view.frame.size.width/2, 40.0f)];
+    [startProgress setCenter:CGPointMake(self.view.frame.size.width / 2, 40.0f)];
     [startProgress setTitle:@"Start" forState:UIControlStateNormal];
     [startProgress addTarget:self
                       action:@selector(startProgress)

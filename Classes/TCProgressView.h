@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface TCProgressView : UIView
 
@@ -24,5 +25,9 @@
 - (void)setProgressViewColor:(UIColor *)progressViewColor;
 
 - (void)setProgress:(float)progress;
+
+- (void)setRounded:(BOOL)rounded withRadius:(CGFloat)radius;
+
+- (void)setProgressViewRounded:(BOOL)rounded withRadius:(CGFloat)radius;
 
 @end
