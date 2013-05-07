@@ -11,9 +11,12 @@
 
 @interface ViewController : UIViewController
 
-@property (retain, nonatomic) TCProgressView *progressView;
+@property (retain, nonatomic) NSMutableArray *progressViews;
 
 - (void)startProgress;
+
 - (void)updateProgress:(NSNumber *)progress;
+
+- (void)resetProgress;
 
 @end

@@ -6,39 +6,48 @@
 //  Copyright (c) 2013 thibaultCha. All rights reserved.
 //
 
+#define EPSILON 0.00001f
+
 #import "TCProgressView.h"
 
 @implementation TCProgressView
 
-@synthesize backgroundView = _backgroundView;
-@synthesize progress = _progress;
+@synthesize progressLayer = _progressLayer;
+@synthesize backgroundLayer = _backgroundLayer;
 
 
 #pragma mark - Init
 
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame style:(TCProgressViewStyle)style
 {
     self = [super initWithFrame:frame];
     
     if (self) {
-        _backgroundView = [[UIView alloc] initWithFrame:self.bounds];
+        self.backgroundLayer = self.layer;
         
-        [self addSubview:self.backgroundView];
+        _progressLayer = [CALayer layer];
+        [self.progressLayer setFrame:self.backgroundLayer.bounds];
+        [self.backgroundLayer addSublayer:self.progressLayer];
+        
+        [self setStyle:style];
+        
+        NSLog(@"end init %@", NSStringFromCGRect(self.progressLayer.frame));
     }
     
     return self;
 }
 
 - (id)initWithFrame:(CGRect)frame
+              style:(TCProgressViewStyle)style
     backgroundColor:(UIColor *)backgroundColor
    andProgressColor:(UIColor *)progressColor
 {
-    self = [self initWithFrame:frame];
+    self = [self initWithFrame:frame style:style];
     
     if (self) {
-        [self setBackgroundViewColor:backgroundColor];
-        [self setProgressViewColor:progressColor];
+        [self setBackgroundColor:backgroundColor];
+        [self setProgressColor:progressColor];
     }
     
     return self;
@@ -51,16 +60,16 @@
 - (void)setRounded:(BOOL)rounded withRadius:(CGFloat)radius
 {
     if (rounded) {
-        self.layer.cornerRadius = radius;
-        self.layer.masksToBounds = YES;
+        self.backgroundLayer.cornerRadius = radius;
+        self.backgroundLayer.masksToBounds = YES;
     } else {
 #warning To improve
-        self.layer.cornerRadius = 0.0f;
-        self.layer.masksToBounds = NO;
+        self.backgroundLayer.cornerRadius = 0;
+        self.backgroundLayer.masksToBounds = NO;
     }
 }
 
-- (void)setProgressViewRounded:(BOOL)rounded withRadius:(CGFloat)radius
+- (void)setProgressRounded:(BOOL)rounded withRadius:(CGFloat)radius
 {
 #warning To do
 }
@@ -69,28 +78,73 @@
 #pragma mark- Setters
 
 
-- (void)setBackgroundViewColor:(UIColor *)backgroundColor
+- (void)setBackgroundColor:(UIColor *)backgroundColor
 {
-    self.backgroundView.backgroundColor = backgroundColor;
+    self.backgroundLayer.backgroundColor = [backgroundColor CGColor];
 }
 
-- (void)setProgressViewColor:(UIColor *)progressViewColor
+- (void)setProgressColor:(UIColor *)progressViewColor
 {
-    self.backgroundColor = progressViewColor;
+    self.progressLayer.backgroundColor = [progressViewColor CGColor];
+}
+
+- (void)setStyle:(TCProgressViewStyle)style
+{
+    _style = style;
+    CGRect newFrame = self.backgroundLayer.bounds;
+    
+    switch (style)
+    {
+        case TCProgressViewStyleNormal:
+        {
+            newFrame.origin.x = self.backgroundLayer.bounds.origin.x;
+            
+            break;
+        }
+        case TCProgressViewStyleFromCenter:
+        {
+            newFrame.origin.x = self.backgroundLayer.bounds.size.width / 2;
+
+            break;
+        }
+        default:
+        {
+            
+            break;
+        }
+    }
+    
+    self.progressLayer.frame = newFrame;
+    [self setProgress:self.progress];
 }
 
 - (void)setProgress:(float)progress
 {
-    if ( 0 <= _progress && _progress <= 1 ) {
+    if ( 0.0f - EPSILON < progress && progress < 1.0f + EPSILON ) {
         _progress = progress;
-        float backgroundWidth = self.frame.size.width - self.frame.size.width * progress;
-        [UIView animateWithDuration:0.1
-                         animations:^{
-                             [self.backgroundView setFrame:CGRectMake(self.frame.size.width - backgroundWidth,
-                                                                      0,
-                                                                      backgroundWidth,
-                                                                      self.frame.size.height)];
-                        }];
+
+        CGRect oldFrame = self.backgroundLayer.bounds;
+        CGRect newFrame = oldFrame;
+        newFrame.size.width = self.backgroundLayer.bounds.size.width * progress;
+        
+        switch (self.style) {
+            case TCProgressViewStyleNormal:
+                
+                break;
+            case TCProgressViewStyleFromCenter:
+                newFrame.origin.x = (self.backgroundLayer.bounds.size.width / 2) - (newFrame.size.width / 2);
+                break;
+            default:
+                break;
+        }
+        
+        self.progressLayer.frame = newFrame;
+        
+        CABasicAnimation *progressAnim = [CABasicAnimation animationWithKeyPath:@"progress"];
+        progressAnim.fromValue = [NSValue valueWithCGRect:oldFrame];
+        progressAnim.toValue = [NSValue valueWithCGRect:newFrame];
+        
+        [self.progressLayer addAnimation:progressAnim forKey:@"progress"];
     }
 }
 
