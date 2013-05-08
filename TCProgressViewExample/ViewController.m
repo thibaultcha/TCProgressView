@@ -28,33 +28,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-    // Start Button
-    UIButton *startButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [startButton setFrame:CGRectMake(0, 0, 100.0f, 40.0f)];
-    [startButton setCenter:CGPointMake((self.view.frame.size.width / 3) * 1, 40.0f)];
-    [startButton setTitle:@"Start" forState:UIControlStateNormal];
-    [startButton addTarget:self
-                      action:@selector(startProgress)
-            forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:startButton];
     
-    // Reset button
-    UIButton *resetButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [resetButton setFrame:CGRectMake(0, 0, 100.0f, 40.0f)];
-    [resetButton setCenter:CGPointMake((self.view.frame.size.width / 3) * 2, 40.0f)];
-    [resetButton setTitle:@"Reset" forState:UIControlStateNormal];
-    [resetButton addTarget:self
-                    action:@selector(resetProgress)
-          forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:resetButton];
-    
-    // Progress View
+    // Progress Views
     CGRect progressViewsFrame = CGRectMake(0,
-                                           startButton.frame.origin.y +
-                                           startButton.frame.size.height + 30.0f,
+                                           130.0f,
                                            self.view.bounds.size.width,
-                                           10.0f);
+                                           20.0f);
     TCProgressView *progressView1 = [[TCProgressView alloc] initWithFrame:progressViewsFrame
                                                                     style:TCProgressViewStyleNormal
                                                           backgroundColor:[UIColor redColor]
@@ -63,10 +42,11 @@
     [self.view addSubview:progressView1];
     
     progressViewsFrame.origin.y += 30.0f;
+    progressViewsFrame.size.height += 20.0f;
     TCProgressView *progressView2 = [[TCProgressView alloc] initWithFrame:progressViewsFrame
                                                                     style:TCProgressViewStyleFromCenter
-                                                          backgroundColor:[UIColor redColor]
-                                                         andProgressColor:[UIColor greenColor]];
+                                                          backgroundColor:[UIColor yellowColor]
+                                                         andProgressColor:[UIColor blueColor]];
     [self.progressViews addObject:progressView2];
     [self.view addSubview:progressView2];
     
@@ -80,16 +60,16 @@
     [self setProgressViews:nil];
 }
 
-- (void)startProgress
-{
+- (IBAction)startProgess
+{  
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         float progress = 0;
         while (progress <= 1.0f) {
-            progress += 0.1;
+            progress += 1 / self.stepsSlider.value;
             [self performSelectorOnMainThread:@selector(updateProgress:)
                                    withObject:[NSNumber numberWithFloat:progress]
                                 waitUntilDone:YES];
-            [NSThread sleepForTimeInterval:0.3];
+            [NSThread sleepForTimeInterval:self.speedSlider.value / 10];
         }
     });
 }
@@ -101,7 +81,7 @@
     }
 }
 
--(void)resetProgress
+- (IBAction)resetProgress
 {
     for (TCProgressView *progressView in self.progressViews) {
         [progressView setProgress:0];

@@ -12,11 +12,13 @@
 @interface ViewController : UIViewController
 
 @property (retain, nonatomic) NSMutableArray *progressViews;
+@property (weak, nonatomic) IBOutlet UISlider *stepsSlider;
+@property (weak, nonatomic) IBOutlet UISlider *speedSlider;
 
-- (void)startProgress;
+- (IBAction)startProgess;
+
+- (IBAction)resetProgress;
 
 - (void)updateProgress:(NSNumber *)progress;
-
-- (void)resetProgress;
 
 @end

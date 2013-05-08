@@ -31,8 +31,6 @@
         [self.backgroundLayer addSublayer:self.progressLayer];
         
         [self setStyle:style];
-        
-        NSLog(@"end init %@", NSStringFromCGRect(self.progressLayer.frame));
     }
     
     return self;
@@ -93,25 +91,15 @@
     _style = style;
     CGRect newFrame = self.backgroundLayer.bounds;
     
-    switch (style)
-    {
+    switch (style) {
         case TCProgressViewStyleNormal:
-        {
             newFrame.origin.x = self.backgroundLayer.bounds.origin.x;
-            
             break;
-        }
         case TCProgressViewStyleFromCenter:
-        {
             newFrame.origin.x = self.backgroundLayer.bounds.size.width / 2;
-
             break;
-        }
         default:
-        {
-            
             break;
-        }
     }
     
     self.progressLayer.frame = newFrame;
