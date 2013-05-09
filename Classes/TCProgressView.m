@@ -52,29 +52,35 @@
 }
 
 
-#pragma mark - Utilities
+#pragma mark- Setters
 
 
-- (void)setRounded:(BOOL)rounded withRadius:(CGFloat)radius
+
+- (void)setRounded:(BOOL)rounded
 {
+    _rounded = rounded;
+    
     if (rounded) {
-        self.backgroundLayer.cornerRadius = radius;
+        self.backgroundLayer.cornerRadius = self.round;
+        self.progressLayer.cornerRadius = self.round;
         self.backgroundLayer.masksToBounds = YES;
+        self.progressLayer.masksToBounds = YES;
     } else {
-#warning To improve
         self.backgroundLayer.cornerRadius = 0;
+        self.progressLayer.cornerRadius = 0;
         self.backgroundLayer.masksToBounds = NO;
+        self.progressLayer.masksToBounds = NO;
     }
 }
 
-- (void)setProgressRounded:(BOOL)rounded withRadius:(CGFloat)radius
+- (void)setRound:(CGFloat)round
 {
-#warning To do
+    _round = round;
+    
+    if (self.rounded) {
+        [self setRounded:self.rounded];
+    }
 }
-
-
-#pragma mark- Setters
-
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor
 {
@@ -92,7 +98,7 @@
     CGRect newFrame = self.backgroundLayer.bounds;
     
     switch (style) {
-        case TCProgressViewStyleNormal:
+        case TCProgressViewStyleFromLeftToRight:
             newFrame.origin.x = self.backgroundLayer.bounds.origin.x;
             break;
         case TCProgressViewStyleFromCenter:
@@ -116,7 +122,7 @@
         newFrame.size.width = self.backgroundLayer.bounds.size.width * progress;
         
         switch (self.style) {
-            case TCProgressViewStyleNormal:
+            case TCProgressViewStyleFromLeftToRight:
                 
                 break;
             case TCProgressViewStyleFromCenter:

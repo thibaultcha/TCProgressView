@@ -35,9 +35,11 @@
                                            self.view.bounds.size.width,
                                            20.0f);
     TCProgressView *progressView1 = [[TCProgressView alloc] initWithFrame:progressViewsFrame
-                                                                    style:TCProgressViewStyleNormal
+                                                                    style:TCProgressViewStyleFromLeftToRight
                                                           backgroundColor:[UIColor redColor]
                                                          andProgressColor:[UIColor greenColor]];
+    progressView1.rounded = YES;
+    progressView1.round = 12.0f;
     [self.progressViews addObject:progressView1];
     [self.view addSubview:progressView1];
     
@@ -64,7 +66,7 @@
 {  
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         float progress = 0;
-        while (progress <= 1.0f) {
+        while (progress <= 1.0f) {                
             progress += 1 / self.stepsSlider.value;
             [self performSelectorOnMainThread:@selector(updateProgress:)
                                    withObject:[NSNumber numberWithFloat:progress]
