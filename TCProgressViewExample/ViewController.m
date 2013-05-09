@@ -30,16 +30,16 @@
     [super viewDidLoad];
     
     // Progress Views
-    CGRect progressViewsFrame = CGRectMake(0,
+    CGRect progressViewsFrame = CGRectMake(10.0f,
                                            130.0f,
-                                           self.view.bounds.size.width,
+                                           300.0f,
                                            20.0f);
     TCProgressView *progressView1 = [[TCProgressView alloc] initWithFrame:progressViewsFrame
                                                                     style:TCProgressViewStyleFromLeftToRight
                                                           backgroundColor:[UIColor redColor]
                                                          andProgressColor:[UIColor greenColor]];
     progressView1.rounded = YES;
-    progressView1.cornersRadius = 12.0f;
+    progressView1.cornersRadius = 8.0f;
     [self.progressViews addObject:progressView1];
     [self.view addSubview:progressView1];
     

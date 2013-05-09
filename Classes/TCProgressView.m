@@ -73,9 +73,9 @@
     }
 }
 
-- (void)setCornersRadius:(CGFloat)round
+- (void)setCornersRadius:(CGFloat)cornersRadius
 {
-    _round = round;
+    _cornersRadius = cornersRadius;
     
     if (self.rounded) {
         [self setRounded:self.rounded];

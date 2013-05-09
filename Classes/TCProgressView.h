@@ -23,7 +23,8 @@ typedef NS_OPTIONS(NSUInteger, TCProgressViewStyle) {
 @property (nonatomic, readwrite, setter = setCornersRadius:) CGFloat cornersRadius;
 @property (nonatomic, readwrite, setter = setRounded:) BOOL rounded;
 
-- (id)initWithFrame:(CGRect)frame style:(TCProgressViewStyle)style;
+- (id)initWithFrame:(CGRect)frame
+              style:(TCProgressViewStyle)style;
 
 - (id)initWithFrame:(CGRect)frame
               style:(TCProgressViewStyle)style
