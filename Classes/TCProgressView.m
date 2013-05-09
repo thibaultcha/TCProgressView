@@ -61,8 +61,8 @@
     _rounded = rounded;
     
     if (rounded) {
-        self.backgroundLayer.cornerRadius = self.round;
-        self.progressLayer.cornerRadius = self.round;
+        self.backgroundLayer.cornerRadius = self.cornersRadius;
+        self.progressLayer.cornerRadius = self.cornersRadius;
         self.backgroundLayer.masksToBounds = YES;
         self.progressLayer.masksToBounds = YES;
     } else {
@@ -73,7 +73,7 @@
     }
 }
 
-- (void)setRound:(CGFloat)round
+- (void)setCornersRadius:(CGFloat)round
 {
     _round = round;
     

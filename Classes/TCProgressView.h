@@ -20,7 +20,7 @@ typedef NS_OPTIONS(NSUInteger, TCProgressViewStyle) {
 @property (nonatomic, assign) CALayer *backgroundLayer;
 @property (nonatomic, readwrite, setter = setTCProgressViewStyle:) TCProgressViewStyle style;
 @property (nonatomic, readwrite, setter = setProgress:) float progress;
-@property (nonatomic, readwrite, setter = setRound:) CGFloat round;
+@property (nonatomic, readwrite, setter = setCornersRadius:) CGFloat cornersRadius;
 @property (nonatomic, readwrite, setter = setRounded:) BOOL rounded;
 
 - (id)initWithFrame:(CGRect)frame style:(TCProgressViewStyle)style;
@@ -29,10 +29,6 @@ typedef NS_OPTIONS(NSUInteger, TCProgressViewStyle) {
               style:(TCProgressViewStyle)style
     backgroundColor:(UIColor *)backgroundColor
    andProgressColor:(UIColor *)progressColor;
-
-- (void)setStyle:(TCProgressViewStyle)style;
-
-- (void)setProgress:(float)progress;
 
 /*
   UI settings

@@ -39,7 +39,7 @@
                                                           backgroundColor:[UIColor redColor]
                                                          andProgressColor:[UIColor greenColor]];
     progressView1.rounded = YES;
-    progressView1.round = 12.0f;
+    progressView1.cornersRadius = 12.0f;
     [self.progressViews addObject:progressView1];
     [self.view addSubview:progressView1];
     
