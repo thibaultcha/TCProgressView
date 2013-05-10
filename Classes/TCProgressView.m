@@ -95,6 +95,7 @@
 - (void)setStyle:(TCProgressViewStyle)style
 {
     _style = style;
+    
     CGRect newFrame = self.backgroundLayer.bounds;
     
     switch (style) {
