@@ -22,7 +22,7 @@
     
     if (self) {
         [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-        self.backgroundLayer = self.layer;
+        [self setBackgroundLayer:self.layer];
         
         _progressLayer = [CALayer layer];
         [self.progressLayer setFrame:self.backgroundLayer.bounds];
@@ -37,15 +37,13 @@
 - (id)initWithFrame:(CGRect)frame
               style:(TCProgressViewStyle)style
     backgroundColor:(UIColor *)backgroundColor
-   andProgressColor:(UIColor *)progressColor
+      progressColor:(UIColor *)progressColor
 {
     self = [self initWithFrame:frame style:style];
-    
     if (self) {
         [self setBackgroundColor:backgroundColor];
         [self setProgressColor:progressColor];
     }
-    
     return self;
 }
 
@@ -74,7 +72,6 @@
 - (void)setCornersRadius:(CGFloat)cornersRadius
 {
     _cornersRadius = cornersRadius;
-    
     if (self.rounded) {
         [self setRounded:self.rounded];
     }
@@ -82,12 +79,12 @@
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor
 {
-    self.backgroundLayer.backgroundColor = [backgroundColor CGColor];
+    [self.backgroundLayer setBackgroundColor:backgroundColor.CGColor];
 }
 
 - (void)setProgressColor:(UIColor *)progressViewColor
 {
-    self.progressLayer.backgroundColor = [progressViewColor CGColor];
+    [self.progressLayer setBackgroundColor:progressViewColor.CGColor];
 }
 
 - (void)setStyle:(TCProgressViewStyle)style
@@ -95,7 +92,6 @@
     _style = style;
     
     CGRect newFrame = self.backgroundLayer.bounds;
-    
     if (style == TCProgressViewStyleFromLeftToRight) {
         newFrame.origin.x = self.backgroundLayer.bounds.origin.x;
     }
@@ -103,7 +99,7 @@
         newFrame.origin.x = self.backgroundLayer.bounds.size.width/2;
     }
     
-    self.progressLayer.frame = newFrame;
+    [self.progressLayer setFrame:newFrame];
     [self setProgress:self.progress];
 }
 
@@ -123,7 +119,7 @@
             newFrame.origin.x = (self.backgroundLayer.bounds.size.width/2) - (newFrame.size.width/2);
         }
         
-        self.progressLayer.frame = newFrame;
+        [self.progressLayer setFrame:newFrame];
         CABasicAnimation *progressAnim = [CABasicAnimation animationWithKeyPath:@"progress"];
         progressAnim.fromValue = [NSValue valueWithCGRect:oldFrame];
         progressAnim.toValue = [NSValue valueWithCGRect:newFrame];

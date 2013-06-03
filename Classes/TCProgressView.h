@@ -29,13 +29,12 @@ typedef NS_OPTIONS(NSUInteger, TCProgressViewStyle) {
 - (id)initWithFrame:(CGRect)frame
               style:(TCProgressViewStyle)style
     backgroundColor:(UIColor *)backgroundColor
-   andProgressColor:(UIColor *)progressColor;
+      progressColor:(UIColor *)progressColor;
 
 /*
-  UI settings
-*/
+ UI settings
+ */
 - (void)setBackgroundColor:(UIColor *)backgroundColor;
-
 - (void)setProgressColor:(UIColor *)progressViewColor;
 
 @end
