@@ -12,9 +12,6 @@
 
 @implementation TCProgressView
 
-@synthesize progressLayer = _progressLayer;
-@synthesize backgroundLayer = _backgroundLayer;
-
 
 #pragma mark - Init
 
@@ -24,6 +21,7 @@
     self = [super initWithFrame:frame];
     
     if (self) {
+        [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
         self.backgroundLayer = self.layer;
         
         _progressLayer = [CALayer layer];
@@ -98,15 +96,11 @@
     
     CGRect newFrame = self.backgroundLayer.bounds;
     
-    switch (style) {
-        case TCProgressViewStyleFromLeftToRight:
-            newFrame.origin.x = self.backgroundLayer.bounds.origin.x;
-            break;
-        case TCProgressViewStyleFromCenter:
-            newFrame.origin.x = self.backgroundLayer.bounds.size.width / 2;
-            break;
-        default:
-            break;
+    if (style == TCProgressViewStyleFromLeftToRight) {
+        newFrame.origin.x = self.backgroundLayer.bounds.origin.x;
+    }
+    else if (style == TCProgressViewStyleFromCenter) {
+        newFrame.origin.x = self.backgroundLayer.bounds.size.width/2;
     }
     
     self.progressLayer.frame = newFrame;
@@ -115,26 +109,21 @@
 
 - (void)setProgress:(float)progress
 {
-    if ( 0.0f - EPSILON < progress && progress < 1.0f + EPSILON ) {
+    if (0.0f - EPSILON < progress && progress < 1.0f + EPSILON) {
         _progress = progress;
-
+        
         CGRect oldFrame = self.backgroundLayer.bounds;
         CGRect newFrame = oldFrame;
         newFrame.size.width = self.backgroundLayer.bounds.size.width * progress;
         
-        switch (self.style) {
-            case TCProgressViewStyleFromLeftToRight:
-                
-                break;
-            case TCProgressViewStyleFromCenter:
-                newFrame.origin.x = (self.backgroundLayer.bounds.size.width / 2) - (newFrame.size.width / 2);
-                break;
-            default:
-                break;
+        if (self.style == TCProgressViewStyleFromLeftToRight) {
+            
+        }
+        else if (self.style == TCProgressViewStyleFromCenter) {
+            newFrame.origin.x = (self.backgroundLayer.bounds.size.width/2) - (newFrame.size.width/2);
         }
         
         self.progressLayer.frame = newFrame;
-        
         CABasicAnimation *progressAnim = [CABasicAnimation animationWithKeyPath:@"progress"];
         progressAnim.fromValue = [NSValue valueWithCGRect:oldFrame];
         progressAnim.toValue = [NSValue valueWithCGRect:newFrame];
