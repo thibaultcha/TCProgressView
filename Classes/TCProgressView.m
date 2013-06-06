@@ -116,7 +116,7 @@
             
         }
         else if (self.style == TCProgressViewStyleFromCenter) {
-            newFrame.origin.x = (self.backgroundLayer.bounds.size.width/2) - (newFrame.size.width/2);
+            newFrame.origin.x = self.backgroundLayer.bounds.size.width/2 - newFrame.size.width/2;
         }
         
         [self.progressLayer setFrame:newFrame];
