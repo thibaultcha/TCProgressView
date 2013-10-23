@@ -10,6 +10,11 @@
 
 #import "TCProgressView.h"
 
+@interface TCProgressView ()
+@property (nonatomic, retain) CALayer *progressLayer;
+@property (nonatomic, assign) CALayer *backgroundLayer;
+@end
+
 @implementation TCProgressView
 
 
@@ -30,7 +35,6 @@
         
         [self setStyle:style];
     }
-    
     return self;
 }
 
@@ -61,7 +65,8 @@
         self.progressLayer.cornerRadius = self.cornersRadius;
         self.backgroundLayer.masksToBounds = YES;
         self.progressLayer.masksToBounds = YES;
-    } else {
+    }
+    else {
         self.backgroundLayer.cornerRadius = 0;
         self.progressLayer.cornerRadius = 0;
         self.backgroundLayer.masksToBounds = NO;
@@ -72,7 +77,7 @@
 - (void)setCornersRadius:(CGFloat)cornersRadius
 {
     _cornersRadius = cornersRadius;
-    if (self.rounded) {
+    if (self.rounded) { // to avoid calling setRounded
         [self setRounded:self.rounded];
     }
 }
