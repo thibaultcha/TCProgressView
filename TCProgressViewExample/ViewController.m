@@ -34,10 +34,11 @@
                                            130.0f,
                                            300.0f,
                                            20.0f);
+
     TCProgressView *progressView1 = [[TCProgressView alloc] initWithFrame:progressViewsFrame
                                                                     style:TCProgressViewStyleFromLeftToRight
                                                           backgroundColor:[UIColor redColor]
-                                                         andProgressColor:[UIColor greenColor]];
+                                                            progressColor:[UIColor greenColor]];
     progressView1.rounded = YES;
     progressView1.cornersRadius = 8.0f;
     [self.progressViews addObject:progressView1];
@@ -48,7 +49,7 @@
     TCProgressView *progressView2 = [[TCProgressView alloc] initWithFrame:progressViewsFrame
                                                                     style:TCProgressViewStyleFromCenter
                                                           backgroundColor:[UIColor yellowColor]
-                                                         andProgressColor:[UIColor blueColor]];
+                                                            progressColor:[UIColor blueColor]];
     [self.progressViews addObject:progressView2];
     [self.view addSubview:progressView2];
     

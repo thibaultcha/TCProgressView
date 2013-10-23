@@ -16,8 +16,6 @@ typedef NS_OPTIONS(NSUInteger, TCProgressViewStyle) {
 
 @interface TCProgressView : UIView
 
-@property (nonatomic, retain) CALayer *progressLayer;
-@property (nonatomic, assign) CALayer *backgroundLayer;
 @property (nonatomic, readwrite, setter = setTCProgressViewStyle:) TCProgressViewStyle style;
 @property (nonatomic, readwrite, setter = setProgress:) float progress;
 @property (nonatomic, readwrite, setter = setCornersRadius:) CGFloat cornersRadius;
